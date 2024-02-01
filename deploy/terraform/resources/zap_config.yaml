@@ -1,0 +1,50 @@
+---
+env:
+  contexts:
+    - name: "Default Context"
+      urls: ["http://<<PUBLIC_IP>>:8080/eb/v1/"]
+      includePaths: []
+      excludePaths: []
+      authentication:
+        parameters: {}
+        verification:
+          method: "response"
+          pollFrequency: 60
+          pollUnits: "requests"
+      sessionManagement:
+        method: "cookie"
+        parameters: {}
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+  - parameters:
+      scanOnlyInScope: true
+      enableTags: false
+    rules: []
+    name: "passiveScan-config"
+    type: "passiveScan-config"
+  - parameters: {}
+    name: "spider"
+    type: "spider"
+  - parameters: {}
+    name: "spiderAjax"
+    type: "spiderAjax"
+  - parameters: {}
+    name: "passiveScan-wait"
+    type: "passiveScan-wait"
+  - parameters: {}
+    policyDefinition:
+      rules: []
+    name: "activeScan"
+    type: "activeScan"
+  - parameters:
+      template: "traditional-json-plus"
+      reportDir: "/tmp/"
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report"
+    type: "report"
+

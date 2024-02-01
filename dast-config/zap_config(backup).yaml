@@ -1,0 +1,63 @@
+env:
+  contexts:
+    - name: "Default Context"
+      urls:
+        - "http://10.32.1.9:8080/eb/v1/"
+      includePaths:
+        - "http://10.32.1.9:8080/eb/v1/.*"
+      excludePaths: []
+      authentication:
+        parameters: {}
+        verification:
+          method: "response"
+          pollFrequency: 60
+          pollUnits: "requests"
+      sessionManagement:
+        method: "cookie"
+        parameters: {}
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+  - parameters:
+      maxAlertsPerRule: 0
+      scanOnlyInScope: true
+      maxBodySizeInBytesToScan: 0
+      enableTags: false
+    rules: []
+    name: "passiveScan-config"
+    type: "passiveScan-config"
+  - parameters:
+      apiFile: "C:\\Users\\haimh\\OneDrive - Checkmarx\\Desktop\\Work\\DAST\\OpenAPI"
+      apiUrl: ""
+      targetUrl: "http://10.32.1.9:8080/eb/v1/*"
+      context: "Default Context"
+    name: "openapi"
+    type: "openapi"
+  - parameters:
+      maxDuration: 0
+    name: "passiveScan-wait"
+    type: "passiveScan-wait"
+  - parameters:
+      template: "risk-confidence-html"
+      reportDir: "C:\\Users\\haimh"
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report"
+    type: "report"
+  - parameters:
+      template: "traditional-pdf"
+      reportDir: "C:\\Users\\haimh"
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report_pdf"
+    type: "report"
+  - parameters:
+      template: "traditional-pdf"
+      reportDir: ""
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report-pdf"
+    type: "report"

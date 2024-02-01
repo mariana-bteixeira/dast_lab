@@ -1,0 +1,51 @@
+---
+env:
+  contexts:
+    - name: "Default Context"
+      urls:
+        - "http://<<PUBLIC_IP>>:8080/eb/v1/"
+      includePaths:
+        - "http://<<PUBLIC_IP>>:8080/eb/v1/.*"
+      excludePaths: []
+      authentication:
+        parameters: {}
+        verification:
+          method: "response"
+          pollFrequency: 60
+          pollUnits: "requests"
+      sessionManagement:
+        method: "cookie"
+        parameters: {}
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+  - parameters:
+      maxAlertsPerRule: 0
+      scanOnlyInScope: true
+      maxBodySizeInBytesToScan: 0
+      enableTags: false
+    rules: []
+    name: "passiveScan-config"
+    type: "passiveScan-config"
+  - parameters:
+      apiFile: ""
+      apiUrl: ""
+      targetUrl: "http://<<PUBLIC_IP>>:8080/eb/v1/*"
+      context: "Default Context"
+    name: "openapi"
+    type: "openapi"
+  - parameters:
+      maxDuration: 0
+    name: "passiveScan-wait"
+    type: "passiveScan-wait"
+  - parameters:
+      template: "risk-confidence-html"
+      reportDir: "/tmp/reports"
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report"
+    type: "report"
+

@@ -1,0 +1,129 @@
+---
+env:
+  contexts:
+  - name: "WASTE"
+    urls:
+    - "https://dev.pharmecology.com/"
+    includePaths:
+    - "https://dev.pharmecology.com/*"
+    excludePaths: []
+    authentication:
+      method: "form"
+      parameters:
+        loginRequestBody: "email={%username%}&password={%password%}"
+        loginPageUrl: "https://dev.pharmecology.com/Account/Login"
+        loginRequestUrl: "https://dev.pharmecology.com/Account/Login"
+      verification:
+        method: "poll"
+        loggedInRegex: "Log out"
+        loggedOutRegex: "Log in"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: ""
+        pollPostData: ""
+    sessionManagement:
+      method: "cookie"
+      parameters: {}
+    technology:
+      exclude: []
+    users:
+    - name: "Dev User"
+      credentials:
+        password: "dd3tCpOF"
+        username: "PenScan.Dev@wm.com"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters:
+    maxAlertsPerRule: 0
+    scanOnlyInScope: true
+    maxBodySizeInBytesToScan: 0
+    enableTags: false
+    disableAllRules: false
+  rules: []
+  name: "passiveScan-config"
+  type: "passiveScan-config"
+- parameters:
+    context: "WASTE"
+    user: "Dev User"
+    url: "https://dev.pharmecology.com/"
+    maxDuration: 0
+    maxDepth: 0
+    maxChildren: 0
+    acceptCookies: false
+    handleODataParametersVisited: false
+    handleParameters: "IGNORE_COMPLETELY"
+    maxParseSizeBytes: 0
+    parseComments: false
+    parseGit: false
+    parseRobotsTxt: false
+    parseSitemapXml: false
+    parseSVNEntries: false
+    postForm: false
+    processForm: false
+    requestWaitTime: 0
+    sendRefererHeader: false
+    userAgent: ""
+  name: "spider"
+  type: "spider"
+- parameters:
+    context: "WASTE"
+    user: "Dev User"
+    url: "https://dev.pharmecology.com/"
+    maxDuration: 0
+    maxCrawlDepth: 0
+    numberOfBrowsers: 16
+    inScopeOnly: true
+    runOnlyIfModern: false
+  name: "spiderAjax"
+  type: "spiderAjax"
+- parameters:
+    maxDuration: 0
+  name: "passiveScan-wait"
+  type: "passiveScan-wait"
+- parameters:
+    context: "WASTE"
+    user: "Dev User"
+    policy: ""
+    maxRuleDurationInMins: 0
+    maxScanDurationInMins: 0
+    addQueryParam: false
+    delayInMs: 0
+    handleAntiCSRFTokens: false
+    injectPluginIdInHeader: false
+    scanHeadersAllRequests: false
+    threadPerHost: 16
+  policyDefinition:
+    defaultStrength: "medium"
+    defaultThreshold: "medium"
+    rules: []
+  name: "activeScan"
+  type: "activeScan"
+- parameters:
+    template: "traditional-pdf"
+    reportDir: "/Users/anterosilva"
+    reportFile: ""
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+    displayReport: false
+  risks:
+  - "info"
+  - "low"
+  - "medium"
+  - "high"
+  confidences:
+  - "falsepositive"
+  - "low"
+  - "medium"
+  - "high"
+  - "confirmed"
+  sections:
+  - "instancecount"
+  - "alertdetails"
+  - "alertcount"
+  name: "report-pdf"
+  type: "report"
+

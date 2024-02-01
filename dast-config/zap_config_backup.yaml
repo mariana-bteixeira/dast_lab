@@ -1,0 +1,68 @@
+---
+env:
+  contexts:
+    - name: "Default Context"
+      urls:
+        - "http://testhtml5.vulnweb.com/"
+      includePaths:
+        - "http://testhtml5.vulnweb.com/.*"
+      excludePaths: []
+      authentication:
+        method: "form"
+        parameters:
+          loginPageUrl: "http://testhtml5.vulnweb.com/#/popular"
+          loginRequestUrl: "http://testhtml5.vulnweb.com/login"
+          loginRequestBody: "username={%username%}&password={%password%}"
+        verification:
+          method: "response"
+          loggedInRegex: "Logout"
+          loggedOutRegex: "Login"
+          pollFrequency: 60
+          pollUnits: "requests"
+          pollUrl: ""
+          pollPostData: ""
+      sessionManagement:
+        method: "cookie"
+        parameters: {}
+      technology:
+        exclude: []
+      users:
+        - name: "test_user"
+          credentials:
+            password: "admin"
+            username: "admin"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+  - parameters:
+      scanOnlyInScope: true
+      enableTags: false
+    rules: []
+    name: "passiveScan-config"
+    type: "passiveScan-config"
+  - parameters:
+      context: "Default Context"
+      user: "test_user"
+      url: ""
+      maxDuration: 3
+      maxDepth: 2
+      maxChildren: 0
+    name: "spider"
+    type: "spider"
+  - parameters:
+      template: "risk-confidence-html"
+      reportDir: ""
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report"
+    type: "report"
+  - parameters:
+      template: "traditional-pdf"
+      reportDir: ""
+      reportTitle: "ZAP Scanning Report"
+      reportDescription: ""
+    name: "report-pdf"
+    type: "report"
