@@ -1,0 +1,45 @@
+name: Deploy EasyBuggy For Demo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy EasyBuggy
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACC_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_S_KEY }}
+        aws-region: eu-west-1    
+    - name: Check Terraform
+      run: |
+        which terraform
+        terraform -version
+    - name: Init Terraform
+      working-directory: ./deploy/terraform
+      run: |
+        terraform init
+        terraform workspace new demo || true
+        terraform plan
+        terraform apply --auto-approve
+    - name: Get Public IP
+      working-directory: ./deploy/terraform
+      run: |
+        public_ip=$(terraform output -raw ip)
+        echo "EC2_IP=$(echo $public_ip)" >> $GITHUB_ENV
+    - name: Inject public IP to Config files
+      run: |
+        sed -i "s/<<PUBLIC_IP>>/${EC2_IP}/g" ./deploy/terraform/resources/openapi.yaml
+        sed -i "s/<<PUBLIC_IP>>/${EC2_IP}/g" ./deploy/terraform/resources/zap_config.yaml
+        sed -i "s/<<PUBLIC_IP>>/${EC2_IP}/g" ./deploy/terraform/resources/zap_config_api.yaml
+    - name: Upload Config Files
+      uses: actions/upload-artifact@v2
+      with:
+        name: configs
+        path: ./deploy/terraform/resources
+        if-no-files-found: error
+        retention-days: 14                 
