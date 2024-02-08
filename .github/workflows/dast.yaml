@@ -1,4 +1,4 @@
-name: DAST Demo Env
+name: DAST LAB Env
 
 on:
   pull_request:
@@ -19,13 +19,13 @@ jobs:
       - name: Change dir owner
         run: sudo chown -R 1000:1000 ${{ github.workspace }}
       - name: Checkmarx DAST Github Action
-        uses: Checkmarx/dast-github-action@v1.0.5
+        uses: Checkmarx/dast-github-action@v1.0.6
         env:
           CX_APIKEY: ${{ secrets.AST_API_KEY }}
         with:
           command: web
           config: dast-config/zap_config.yaml
-          environment_id: 8112dde1-2673-4784-8615-9ad23b0311a2
+          environment_id: e655b0a8-be7a-4332-9de5-c23b2a954dbf
           fail_on: "HIGH"
           log_level: info
           base_url: https://deu.ast.checkmarx.net/
