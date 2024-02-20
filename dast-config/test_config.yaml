@@ -3,7 +3,7 @@ env:
         - authentication:
             method: script
             parameters:
-                script: "C:\\Users\\admin\\OWASP ZAP\\scripts\\scripts\\authentication\\testfire_auth.js"
+                script: "/github/workspace/dast-config/testfire_auth.js""
                 scriptEngine: "ECMAScript : Graal.js"
                 usernameKey: "uid"
                 passwordKey: "passw"
@@ -47,7 +47,7 @@ jobs:
         type: "authentication"
         engine: "ECMAScript : Graal.js"
         name: "testfire_auth"
-        file: "C:\\Users\\admin\\OWASP ZAP\\scripts\\scripts\\authentication\\testfire_auth.js"
+        file: "/github/workspace/dast-config/testfire_auth.js"
         target: ""
         inline: ""
       name: "script"
