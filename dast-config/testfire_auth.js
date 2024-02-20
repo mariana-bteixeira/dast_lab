@@ -60,12 +60,13 @@ function authenticate(helper, paramsValues, credentials) {
 	
 	var requestBody = paramsValues.get(userNameKey).toLowerCase() + "=" + encodeURIComponent(username);
     requestBody += "&" + paramsValues.get(passwordKey).toLowerCase() + "=" + encodeURIComponent(password);
+    requestBody += "&btnSubmit=Login";
     
     var request = {
         method: HttpRequestHeader.POST,
         uri: new URI(url, false),
         body: requestBody,
-        contentType: textHtml,
+        contentType: formEncoded,
         cookies: null,
         authHeader: null,
         referer: null,

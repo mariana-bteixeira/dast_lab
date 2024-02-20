@@ -21,14 +21,14 @@ jobs:
       - name: Checkmarx DAST Github Action
         uses: Checkmarx/dast-github-action@v1.0.6
         env:
-          CX_APIKEY: ${{ secrets.AST_API_KEY }}
+          CX_APIKEY: eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI4OGFhMmZhMy1kMWYzLTRmNGQtODFhNi00Y2E0OTgyMjU4NmEifQ.eyJpYXQiOjE3MDg0MzI1ODEsImp0aSI6IjE4Y2E0NTU2LTkzMDMtNDcyZS1iNjQxLWRlNzkzM2NkYzU1ZCIsImlzcyI6Imh0dHBzOi8vZXUuaWFtLmNoZWNrbWFyeC5uZXQvYXV0aC9yZWFsbXMvY3hfcHNfbWFyaWFuYV90ZWl4ZWlyYSIsImF1ZCI6Imh0dHBzOi8vZXUuaWFtLmNoZWNrbWFyeC5uZXQvYXV0aC9yZWFsbXMvY3hfcHNfbWFyaWFuYV90ZWl4ZWlyYSIsInN1YiI6IjE0OTRkNjJjLWZiY2ItNDgzNS04ZWM2LTgxNGQ4MTZjNDgzZCIsInR5cCI6Ik9mZmxpbmUiLCJhenAiOiJhc3QtYXBwIiwic2Vzc2lvbl9zdGF0ZSI6IjEzNjAwMjlmLWEzZGUtNGQwMy04YzAyLTc2MGI0NWIxZDA5ZSIsInNjb3BlIjoiIG9mZmxpbmVfYWNjZXNzIiwic2lkIjoiMTM2MDAyOWYtYTNkZS00ZDAzLThjMDItNzYwYjQ1YjFkMDllIn0.grad6zW8YbtJJUCshze9w7tAr44C_Vwf_MRpHd2yfao
         with:
           command: web
-          config: dast-config/zap_config.yaml
-          environment_id: e655b0a8-be7a-4332-9de5-c23b2a954dbf
+          config: dast-config/test_config.yaml
+          environment_id: 607f2aa9-9208-4300-a6cd-a6c1958c0b99
           fail_on: "HIGH"
           log_level: info
-          base_url: https://deu.ast.checkmarx.net/
+          base_url: https://eu.ast.checkmarx.net/
           verbose: true
           timeout: 100000
           output: ${{ github.workspace }}/output_fold

@@ -7,7 +7,7 @@ env:
                 scriptEngine: "ECMAScript : Graal.js"
                 usernameKey: "uid"
                 passwordKey: "passw"
-                loginURL: http://testfire.net/login.jsp
+                loginURL: http://testfire.net/doLogin
             verification:
                 loggedInRegex: Sign off
                 loggedOutRegex: Sign In
