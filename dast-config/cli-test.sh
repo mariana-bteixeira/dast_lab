@@ -1,0 +1,13 @@
+docker run -d -e CX_APIKEY=eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1MjFjODg2ZC1lMmI0LTQ3ZTYtYTAyYi0zODdiZTNiZmZlNGQifQ.eyJpYXQiOjE2ODk2OTA5MjYsImp0aSI6ImZmMzIzYWZlLWQ5YTUtNGFmYi05OTVkLTAyNGVhMDMxZjQ4NCIsImlzcyI6Imh0dHBzOi8vZGV1LmlhbS5jaGVja21hcngubmV0L2F1dGgvcmVhbG1zL2Rhc3RybmQiLCJhdWQiOiJodHRwczovL2RldS5pYW0uY2hlY2ttYXJ4Lm5ldC9hdXRoL3JlYWxtcy9kYXN0cm5kIiwic3ViIjoiZTE1NDkyNGUtZDg5My00MzJhLTg1MWUtOTI0ODYyNzhkYWI4IiwidHlwIjoiT2ZmbGluZSIsImF6cCI6ImFzdC1hcHAiLCJzZXNzaW9uX3N0YXRlIjoiZDA5MTA1M2MtYmIxMi00Nzk0LWJiMjQtMTMyZDY1NmI0ZjY2Iiwic2NvcGUiOiIgb2ZmbGluZV9hY2Nlc3MiLCJzaWQiOiJkMDkxMDUzYy1iYjEyLTQ3OTQtYmIyNC0xMzJkNjU2YjRmNjYifQ.NzTp2L-sJ6jOOKftBCsW_XUU6Usvs3BgvL8y7wSWVMg \
+  -v $(pwd):/home/ubuntu checkmarx/dast:latest web  \
+  --base-url=https://deu.ast.checkmarx.net \
+  --environment-id=e1cc0999-a525-489f-9f5e-0ddb3236fcac \
+  --config=/home/ubuntu/test_config.yaml \
+  --output=/home/ubuntu/output \
+  --timeout=86400 \
+  --update-interval=30 \
+  --jvm-properties=-Xmx3G \
+  --log-level=debug \
+  --verbose \
+  --retry=3 \
+  --retry-delay=20 2>&1 | tee DAST_dockerimage.log
